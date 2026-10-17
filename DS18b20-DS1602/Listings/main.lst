@@ -1,0 +1,73 @@
+C51 COMPILER V9.01   MAIN                                                                  12/25/2025 19:00:27 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) OBJECT(.\Objects\mai
+                    -n.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include <stdio.h>
+   4          #include <math.h>
+   5          #include "DS18b20.h"
+   6          #include "delay.h"
+   7          #include "DS1602.h"
+   8          #include "float_operations.h"
+   9          #include "buzz.h"
+  10          #include "L298N.h"
+  11          
+  12           void main()
+  13                    {
+  14   1                              float temp_set1=20.0;
+  15   1                              float temp_set2=25.0;
+  16   1                              float temperature_realtime;
+  17   1                              char  temp_str[16];
+  18   1                              char  tempset1_str[16];
+  19   1                              char  tempset2_str[16];
+  20   1                              LCD1602_init();
+  21   1                              while(1)
+  22   1                              {       
+  23   2                                      temperature_realtime =DS18B20_GetTemp();
+  24   2                                      temperature_To_String(temperature_realtime, temp_str);
+  25   2                              temp_set1=float_calculation1(temp_set1,1.0f, 1.0f);
+  26   2                                      temp_set2=float_calculation2(temp_set2,1.0f, 1.0f);              
+  27   2                                      float_To_String(temp_set1,  tempset1_str);
+  28   2                                      float_To_String(temp_set2,  tempset2_str);
+  29   2                              LCD1602_dis_1(1, 0, "Set:");
+  30   2                              LCD1602_dis_1(2, 0, "Env:");
+  31   2                              LCD1602_display_2(0x84, tempset1_str, 0, 6);
+  32   2                              LCD1602_display_2(0x89, tempset2_str, 0, 6);    
+  33   2                              LCD1602_display_2(0xC4, temp_str, 0, 6);
+  34   2                              if(temperature_realtime<temp_set1||temperature_realtime>temp_set2)
+  35   2                              {
+  36   3                               Buzz_Times(10);
+  37   3                               if(temperature_realtime<temp_set1)
+  38   3                               {motor_run1();}
+  39   3                               if(temperature_realtime>temp_set2)
+  40   3                               {motor_run2();}
+  41   3                              }
+  42   2                              else
+  43   2                              {
+  44   3                               motor_stop();  
+  45   3                              }
+  46   2                              }
+  47   1               }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    346    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.01   MAIN                                                                  12/25/2025 19:00:27 PAGE 2   
+
+   DATA SIZE        =   ----      60
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

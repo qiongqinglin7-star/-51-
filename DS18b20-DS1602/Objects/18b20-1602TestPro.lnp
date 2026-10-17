@@ -1,0 +1,10 @@
+".\Objects\STARTUP.obj",
+".\Objects\DS18b20.obj",
+".\Objects\delay.obj",
+".\Objects\buzz.obj",
+".\Objects\DS1602.obj",
+".\Objects\main.obj",
+".\Objects\float_operations.obj",
+".\Objects\L298N.obj" 
+TO ".\Objects\18b20-1602TestPro" 
+PRINT(".\Listings\18b20-1602TestPro.m51") RAMSIZE(256) 

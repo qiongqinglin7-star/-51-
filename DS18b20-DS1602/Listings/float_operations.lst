@@ -1,0 +1,95 @@
+C51 COMPILER V9.01   FLOAT_OPERATIONS                                                      12/25/2025 18:53:12 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE FLOAT_OPERATIONS
+OBJECT MODULE PLACED IN .\Objects\float_operations.obj
+COMPILER INVOKED BY: D:\C51\BIN\C51.EXE float_operations.c BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\float_operations.l
+                    -st) OBJECT(.\Objects\float_operations.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include <stdio.h>
+   4          #include <math.h>
+   5          #include "float_operations.h"
+   6          #include "delay.h"
+   7          
+   8          float value;
+   9          
+  10           float float_calculation1(float y,float increment, float decrement) 
+  11                  {
+  12   1         if(key1==0)
+  13   1                                  {
+  14   2                                               delay(5);
+  15   2                  if(key1==0)
+  16   2                                                      {
+  17   3                                                       y += increment;
+  18   3                   while(key1==0); 
+  19   3                                                      }
+  20   2                                              }
+  21   1                       if(key2==0)
+  22   1                                 {
+  23   2                                               delay(5);
+  24   2                                               if(key2==0)
+  25   2                                               {
+  26   3                                                       y -= decrement;
+  27   3                                                       while(key2==0); 
+  28   3                                               }
+  29   2                                       }
+  30   1                                       
+  31   1                                      value=y;
+  32   1                               return value;  
+  33   1        }
+  34          float float_calculation2(float y,float increment, float decrement) 
+  35                  {
+  36   1         if(key3==0)
+  37   1                                  {
+  38   2                                               delay(5);
+  39   2                  if(key3==0)
+  40   2                                                      {
+  41   3                                                       y += increment;
+  42   3                   while(key3==0); 
+  43   3                                                      }
+  44   2                                              }
+  45   1                       if(key4==0)
+  46   1                                 {
+  47   2                                               delay(5);
+  48   2                                               if(key4==0)
+  49   2                                               {
+  50   3                                                       y -= decrement;
+  51   3                                                       while(key4==0); 
+  52   3                                               }
+  53   2                                       }
+  54   1                                       
+C51 COMPILER V9.01   FLOAT_OPERATIONS                                                      12/25/2025 18:53:12 PAGE 2   
+
+  55   1                                      value=y;
+  56   1                               return value;  
+  57   1        }
+  58           void float_To_String(float x, char *str_1)
+  59            { 
+  60   1                       int x_int = (int)x;       
+  61   1           int x_dec = (int)((x - x_int) * 10); 
+  62   1                       str_1[0] = x_int/10 + '0';   
+  63   1           str_1[1] = x_int%10 + '0';   
+  64   1           str_1[2] = '.';                 
+  65   1           str_1[3] = x_dec + '0';      
+  66   1           str_1[4] = ' ';                 
+  67   1           str_1[5] = 'C';                 
+  68   1           str_1[6] = '\0';  
+  69   1         }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    385    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      35
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,118 @@
+C51 COMPILER V9.01   DS18B20                                                               12/25/2025 18:53:12 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN .\Objects\DS18b20.obj
+COMPILER INVOKED BY: D:\C51\BIN\C51.EXE DS18b20.C BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\DS18b20.lst) OBJECT(.\Objec
+                    -ts\DS18b20.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <math.h>
+   4          #include <intrins.h>
+   5          #include "delay.h"
+   6          #include "DS18b20.h"
+   7           
+   8          float temperature;
+   9          
+  10          bit DS18B20_Init()    
+  11            {
+  12   1         bit  flag=0;
+  13   1         DQ=1;
+  14   1         delay(2);
+  15   1         DQ=0;
+  16   1         delay(75);
+  17   1         DQ=1;
+  18   1         delay(10);
+  19   1         flag=DQ;
+  20   1         delay(20);
+  21   1         return flag;
+  22   1        }
+  23            void writebyte(unsigned char dat)    
+  24            {    
+  25   1          unsigned char n=0;
+  26   1          for(n=0;n<8;n++)
+  27   1          {
+  28   2           DQ=0;
+  29   2           DQ=dat&0x01;
+  30   2           delay(5);
+  31   2           DQ=1;
+  32   2           dat>>=1;
+  33   2           }
+  34   1         }
+  35            unsigned char readbyte()    
+  36            {   
+  37   1         unsigned char n=0,gdata=0;
+  38   1         for(n=0;n<8;n++)
+  39   1          {
+  40   2           DQ=0;
+  41   2           gdata=gdata>>1;
+  42   2           DQ=1;
+  43   2           if(DQ)
+  44   2           { 
+  45   3            gdata=gdata|0x80;
+  46   3           }
+  47   2           delay(4);     
+  48   2          }
+  49   1        return gdata; 
+  50   1        }
+  51                  float DS18B20_GetTemp() 
+  52            {
+  53   1          unsigned char tempL,tempH;
+  54   1          int temp;
+C51 COMPILER V9.01   DS18B20                                                               12/25/2025 18:53:12 PAGE 2   
+
+  55   1          DS18B20_Init();
+  56   1          writebyte(0xcc);
+  57   1          writebyte(0x44);
+  58   1          delay(5);
+  59   1          DS18B20_Init();
+  60   1          writebyte(0xcc);
+  61   1          writebyte(0xbe);
+  62   1          delay(5);
+  63   1          tempL=readbyte();
+  64   1          tempH=readbyte();
+  65   1          temp=(tempH<<8)+tempL;
+  66   1                if(temp & 0x8000)
+  67   1            {
+  68   2              temp=~temp+1;
+  69   2              temperature=temp*(-0.0625);
+  70   2            }
+  71   1          else
+  72   1            {
+  73   2              temperature = temp*0.0625;
+  74   2            }
+  75   1       
+  76   1          return temperature;
+  77   1         }
+  78            void temperature_To_String(float temperature, char *str)
+  79                    {
+  80   1      
+  81   1                       int temperature_int = (int)temperature;       
+  82   1           int temperature_dec = (int)((temperature - temperature_int) * 10); 
+  83   1                       str[0] =temperature_int/10 + '0';   
+  84   1           str[1] =temperature_int%10 + '0';   
+  85   1           str[2] = '.';                 
+  86   1           str[3] =temperature_dec + '0';      
+  87   1           str[4] =' ';                 
+  88   1           str[5] = 'C';                 
+  89   1           str[6] = '\0';  
+  90   1                              
+  91   1          }
+  92                   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    410    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

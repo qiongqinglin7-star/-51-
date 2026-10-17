@@ -1,0 +1,43 @@
+C51 COMPILER V9.01   L298N                                                                 12/25/2025 18:53:12 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE L298N
+OBJECT MODULE PLACED IN .\Objects\L298N.obj
+COMPILER INVOKED BY: D:\C51\BIN\C51.EXE L298N.C BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\L298N.lst) OBJECT(.\Objects\L
+                    -298N.obj)
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          #include "L298N.h"
+   4          
+   5          void motor_run1()
+   6            {
+   7   1         IN1=1;
+   8   1               IN2=0;
+   9   1        }
+  10          void motor_run2()
+  11            {
+  12   1         IN1=0;
+  13   1               IN2=1;
+  14   1        }
+  15          void motor_stop()
+  16                   {
+  17   1         IN1=0;
+  18   1               IN2=0;
+  19   1         }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     15    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
